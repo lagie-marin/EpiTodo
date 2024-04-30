@@ -5,7 +5,7 @@ const app = express();
 
 dotenv.config();
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.send("<p>Hello World!</p>");
 });
 
 app.get("/Marin", (req, res) => {
@@ -13,7 +13,7 @@ app.get("/Marin", (req, res) => {
 });
 const port = process.env.PORT;
 
-Logger.logs(port);
+Logger.logs(`Port: ${port}`);
 
 app.listen(port, () => {
     Logger.serveur(`EpiTodo server: http://localhost:${port}`);
