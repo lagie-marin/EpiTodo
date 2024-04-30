@@ -1,5 +1,6 @@
 const fs = require('fs');
 const dayjs = require("dayjs");
+const dotenv = require("dotenv");
 const format = "{tstamp} {tag} {txt}\n";
 
 async function error(content) {
@@ -26,8 +27,8 @@ async function event(content) {
   await write(content, "black", "bgGreen", "EVT", false);
 }
 
-async function client(content) {
-  await write(content, "black", "bgBlue", "CLIENT", false);
+async function serveur(content) {
+  await write(content, "black", "bgBlue", "SERVER", false);
 }
 
 async function logs(content) {
@@ -48,9 +49,10 @@ async function write(content, tagColor, bgTagColor, tag, error = false) {
   stream.write(item);
 }
 
-module.exports = { error, warn, typo, command, scmd, event, client, logs };
+module.exports = { error, warn, typo, command, scmd, event, serveur, logs };
 function appendToFile(content) {
-  const filePath = "core/logs/log.txt";
+  dotenv.config();
+  const filePath = process.env.LOGS;
   if (!content) {
     console.error('Le contenu est vide ou non défini.');
     return;
