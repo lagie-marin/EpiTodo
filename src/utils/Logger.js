@@ -7,26 +7,6 @@ async function error(content) {
   await write(content, "black", "bgRed", "ERROR", true);
 }
 
-async function warn(content) {
-  await write(content, "black", "bgYellow", "WARN", false);
-}
-
-async function typo(content) {
-  await write(content, "black", "bgCyan", "TYPO", false);
-}
-
-async function command(content) {
-  await write(content, "black", "bgMagenta", "CMD", false);
-}
-
-async function scmd(content) {
-  await write(content, "black", "bgRed", "SCMD", false);
-}
-
-async function event(content) {
-  await write(content, "black", "bgGreen", "EVT", false);
-}
-
 async function serveur(content) {
   await write(content, "black", "bgBlue", "SERVER", false);
 }
@@ -49,7 +29,7 @@ async function write(content, tagColor, bgTagColor, tag, error = false) {
   stream.write(item);
 }
 
-module.exports = { error, warn, typo, command, scmd, event, serveur, logs };
+module.exports = { error, serveur, logs };
 function appendToFile(content) {
   dotenv.config();
   const filePath = process.env.LOGS;

@@ -13,7 +13,7 @@ app.get("/Marin", (req, res) => {
 });
 const port = process.env.PORT;
 
-Logger.logs(`Port: ${port}`);
+Logger.logs(`Listening at port: ${port}`);
 
 app.listen(port, () => {
     Logger.serveur(`EpiTodo server: http://localhost:${port}`);
