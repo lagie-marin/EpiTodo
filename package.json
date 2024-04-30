@@ -11,12 +11,14 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
-    "chalk": "^5.3.0",
-    "dayjs": "^1.11.11",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.9.7"
+  },
+  "devDependencies": {
+    "chalk": "^5.3.0",
+    "dayjs": "^1.11.11",
+    "fs": "^0.0.1-security"
   }
 }
