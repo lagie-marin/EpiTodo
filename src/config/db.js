@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+const logger = require("../utils/Logger");
 
 const dbconnection = mysql.createConnection({
     host: process.env.MYSQL_HOST,
@@ -9,8 +10,8 @@ const dbconnection = mysql.createConnection({
 
 dbconnection.connect(function(err) {
     if (err)
-        console.log(`Error connect database :\n${err.stack}`);
+        logger.error(`Error connect database :\n${err.stack}`);
     else
-        console.log(`Database connected`);
+        logger.serveur(`Database connected`);
 });
 module.exports = dbconnection;
