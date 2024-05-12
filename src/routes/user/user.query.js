@@ -1,6 +1,6 @@
 const db = require("../../config/db");
 
-module.exports = { getUsers, getTodos, register, checkAccountName };
+module.exports = { getUsers, getTodos, register, getAccountByName };
 
 function getUsers(res, id)
 {
@@ -23,7 +23,7 @@ function register(res, mail, mdp, name, fn)
     });
 }
 
-function checkAccountName(res, name, callback)
+function getAccountByName(res, name, callback)
 {
     db.execute("SELECT * FROM user WHERE name = ?", [name], (err, result, fields) => {
         if (result.length == 0)
