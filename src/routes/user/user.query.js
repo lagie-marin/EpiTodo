@@ -1,6 +1,6 @@
 const db = require("../../config/db");
 
-module.exports = { getUsers, getTodos, register };
+module.exports = { getUsers, getTodos, register, checkAccountName };
 
 function getUsers(res, id)
 {
@@ -18,7 +18,17 @@ function getTodos(res, id)
 
 function register(res, mail, mdp, name, fn)
 {
-    db.query("INSERT INTO user (email, password, name, firstname) VALUES (?,?,?,?)", [mail, mdp, name, fn], (err, result, fields) => {
+    db.execute("INSERT INTO user (email, password, name, firstname) VALUES (?,?,?,?)", [mail, mdp, name, fn], (err, result, fields) => {
         res.status(200).json(result);
     });
+}
+
+function checkAccountName(res, name, callback)
+{
+    db.execute("SELECT * FROM user WHERE name = ?", [name], (err, result, fields) => {
+        if (result.length == 0)
+            callback(0);
+        else
+            callback(84);
+    })
 }
