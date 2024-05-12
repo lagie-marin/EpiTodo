@@ -1,6 +1,10 @@
 const db = require("../../config/db");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 
-module.exports = { getUsers, getTodos, register, checkAccountName, checkAccountMail };
+dotenv.config();
+
+module.exports = { getUsers, getTodos, register, checkAccountName, checkAccountMail, getAccountMail };
 
 function getUsers(res, id)
 {
@@ -40,5 +44,24 @@ function checkAccountMail(res, mail, callback)
             callback(0);
         else
             callback(84);
+    });
+}
+
+function getAccountMail(res, mail, mdp, bcrypt, callback)
+{
+    db.execute("SELECT password, id FROM user WHERE email = ?", [mail], (err, result, fields) => {
+        if (result.length == 0)
+            callback(84);
+        else {
+            var mdp2 = result[0].password;
+            var id = result[0].id;
+
+            if(bcrypt.compareSync(mdp, mdp2)) {
+                const token = jwt.sign({email:mail, id:id}, process.env.SECRET);
+                res.json({token});
+                callback(0);
+            }
+            else callback(84);
+        }
     });
 }
