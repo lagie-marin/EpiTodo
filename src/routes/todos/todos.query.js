@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const db = require("../../config/db");
 
-module.exports = { getTodos, getTodosById, createTodos, deleteTodosById };
+module.exports = { getTodos, getTodosById, createTodos, deleteTodosById, updateTodosById };
 
 function getTodos(res)
 {
@@ -31,5 +31,14 @@ function deleteTodosById(res, id)
 {
     db.execute("DELETE FROM todo WHERE id=?", [id], (err, result, fields) => {
         res.status(200).json({"msg": `Successfully deleted record number: ${id}`});
+    });
+}
+
+function updateTodosById(res, title, desc, due, user_id, status, id)
+{
+    db.execute("UPDATE todo SET title=?, description=?, due_time=?, user_id=?, status=? WHERE id=?", [title, desc, due, user_id, status, id], (err, result, fields) => {
+        db.execute("SELECT id, title, description, created_at, due_time, user_id, status FROM todo WHERE id = ?", [id], function(err, results, fields) {
+            res.status(200).json(results);
+        });
     });
 }

@@ -13,6 +13,7 @@ dotenv.config();
 const port = process.env.PORT;
 require("./routes/user/user")(app, bcrypt);
 require("./routes/auth/auth")(app, bcrypt);
+require("./routes/todos/todos")(app, bcrypt);
 
 app.listen(port, () => {
     Logger.logs(`Listening at port: ${port}`);
