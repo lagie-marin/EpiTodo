@@ -1,4 +1,5 @@
-const auth = require("../../middleware/auth")
+const auth = require("../../middleware/auth");
+const notFound = require("../../middleware/notFound");
 const { getTodos, getTodosById, createTodos, deleteTodosById, updateTodosById } = require("./todos.query")
 
 module.exports = function(app, bcrypt) {
@@ -6,7 +7,7 @@ module.exports = function(app, bcrypt) {
         getTodos(res);
     });
 
-    app.get("/todos/:id", auth, vid, (req, res) => {
+    app.get("/todos/:id", auth, notFound, (req, res) => {
         getTodosById(req.params.id);
     });
 

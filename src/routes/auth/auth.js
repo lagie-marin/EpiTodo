@@ -24,13 +24,13 @@ module.exports = function (app, bcrypt) {
         var mdp = req.body["password"];
 
         if (mail == undefined || name == undefined || fn == undefined || mdp == undefined) {
-            res.status(500).json({"msg":"internal server error"});
+            res.status(400).json({"msg":"there is information missing"});
             return;
         }
         mdp = bcrypt.hashSync(mdp, 10);
         checkAccountMail(res, mail, nb => {
             if (nb == 84)
-                res.status(409).json({ "msg": "Account already exists" });
+                res.status(403).json({ "msg": "Account already exists" });
             else
                 register(res, mail, mdp, name, fn);
         });
