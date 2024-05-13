@@ -1,5 +1,5 @@
 const auth = require("../../middleware/auth");
-const { getUsers, getTodos, getInfoUser, rmUserById } = require("./user.query");
+const { getUsers, getTodos, getInfoUser, rmUserById, updateUserInfo } = require("./user.query");
 
 module.exports = function(app, bcrypt) {
     app.get("/user", auth, (req, res) => {
@@ -16,5 +16,19 @@ module.exports = function(app, bcrypt) {
 
     app.delete("/users/:id", auth, (req, res) => {
         rmUserById(res, req.params.id)
+    });
+
+    app.put("/users/:id", auth, (req, res) => {
+        var id = req.params.id;
+        var mail = req.body["email"];
+        var name = req.body["name"];
+        var fn = req.body["firstname"];
+        var mdp = req.body["password"];
+
+        if (id == undefined || mail == undefined || name == undefined
+        || fn == undefined || mdp == undefined)
+            res.status(500).json({"msg":"Internal server error"});
+        mdp = bcrypt.hashSync(mdp, 10);
+        updateUserInfo(res, id, mail, mdp, name, fn);
     });
 }
