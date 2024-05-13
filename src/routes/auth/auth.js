@@ -1,3 +1,4 @@
+const { logs } = require('../../utils/Logger');
 const { checkAccountMail, getAccountMail, register } = require('../user/user.query');
 
 module.exports = function (app, bcrypt) {

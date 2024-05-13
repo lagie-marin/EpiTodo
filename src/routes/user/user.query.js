@@ -1,6 +1,7 @@
 const db = require("../../config/db");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const { error, logs } = require("../../utils/Logger");
 
 dotenv.config();
 
@@ -22,7 +23,13 @@ function getTodos(res, id)
 
 function register(res, mail, mdp, name, fn)
 {
+    
     db.execute("INSERT INTO user (email, password, name, firstname) VALUES (?,?,?,?)", [mail, mdp, name, fn], (err, result, fields) => {
+        if (err) {
+            error(err);
+            res.status(500).json({"msg": "Internal server error"});
+            return;
+        }
         res.status(200).json(jwt.sign({email:mail, password:mdp}, process.env.SECRET));
     });
 }
