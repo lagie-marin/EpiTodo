@@ -8,7 +8,8 @@ const dotenv = require("dotenv");
 const Logger = require("./utils/Logger");
 dotenv.config();
 const port = process.env.PORT;
-require("./routes/user/user")(app, )
+require("./routes/user/user")(app, bcrypt);
+require("./middleware/auth")(app, bcrypt);
 
 app.listen(port, () => {
     Logger.logs(`Listening at port: ${port}`);
