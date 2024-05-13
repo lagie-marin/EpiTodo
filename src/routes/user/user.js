@@ -26,8 +26,10 @@ module.exports = function(app, bcrypt) {
         var mdp = req.body["password"];
 
         if (id == undefined || mail == undefined || name == undefined
-        || fn == undefined || mdp == undefined)
+        || fn == undefined || mdp == undefined) {
             res.status(500).json({"msg":"Internal server error"});
+            return;
+        }
         mdp = bcrypt.hashSync(mdp, 10);
         updateUserInfo(res, id, mail, mdp, name, fn);
     });
