@@ -1,20 +1,16 @@
 const express = require("express");
+var bcrypt = require("bcryptjs");
+const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.raw());
 const dotenv = require("dotenv");
 const Logger = require("./utils/Logger");
-const app = express();
-
 dotenv.config();
-app.get("/", (req, res) => {
-    res.send("<p>Hello World!</p>");
-});
-
-app.get("/Marin", (req, res) => {
-    res.send("Hello Marin!");
-});
 const port = process.env.PORT;
-
-Logger.logs(`Listening at port: ${port}`);
+require("./routes/user/user")(app, )
 
 app.listen(port, () => {
+    Logger.logs(`Listening at port: ${port}`);
     Logger.serveur(`EpiTodo server: http://localhost:${port}`);
 });

@@ -4,9 +4,9 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-module.exports = { getUsers, getTodos, register, checkAccountName, checkAccountMail, getAccountMail };
+module.exports = { getUsers, getTodos, register, checkAccountName, checkAccountMail, getAccountMail, getInfoUser, rmUserById };
 
-function getUsers(res, id)
+function getUsers(res)
 {
     db.query("SELECT * FROM user", (err, result, fields) => {
         res.status(200).json(result);
@@ -63,5 +63,25 @@ function getAccountMail(res, mail, mdp, bcrypt, callback)
             }
             else callback(84);
         }
+    });
+}
+
+function getInfoUser(res, info)
+{
+    db.execute("SELECT * FROM user WHERE id=?", [info], (err, result, fields) => {
+        if (result.length > 0)
+            res.status(200).json(result);
+        else {
+            db.execute("SELECT * FROM user WHERE email=?", [info], (err, result, fields) => {
+                res.status(200).json(result);
+            });
+        }
+    });
+}
+
+function rmUserById(res, id)
+{
+    db.execute("DELETE FROM user WHERE id=?", [id], (err, result, fields) => {
+        res.status(200).json({"msg" : `Successfully deleted record number: ${id}`});
     });
 }
