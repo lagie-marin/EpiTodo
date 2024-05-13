@@ -1,5 +1,4 @@
-const { checkAccountMail, getAccountMail, register } = require('../routes/user/user.query');
-const { logs } = require('../utils/Logger');
+const { checkAccountMail, getAccountMail, register } = require('../user/user.query');
 
 module.exports = function (app, bcrypt) {
     app.post("/login", (req, res) => {
@@ -24,7 +23,6 @@ module.exports = function (app, bcrypt) {
         var fn = req.body["firstname"];
         var mdp = req.body["password"];
 
-        logs("ici\n");
         if (mail == undefined || name == undefined || fn == undefined || mdp == undefined) {
             res.status(500).json({"msg":"internal server error"});
             return;
