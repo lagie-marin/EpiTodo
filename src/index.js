@@ -1,12 +1,15 @@
 const express = require("express");
 var bcrypt = require("bcryptjs");
 const app = express();
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.raw());
+const bodyparser = require("body-parser");
 const dotenv = require("dotenv");
 const Logger = require("./utils/Logger");
+
+app.use(bodyparser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.raw());
 dotenv.config();
+
 const port = process.env.PORT;
 require("./routes/user/user")(app, bcrypt);
 require("./middleware/auth")(app, bcrypt);
