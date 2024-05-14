@@ -22,16 +22,17 @@ module.exports = function (app, bcrypt) {
         var fn = req.body["firstname"];
         var mdp = req.body["password"];
 
-        if (mail == undefined || name == undefined || fn == undefined || mdp == undefined) {
+        if (mail == undefined || name == undefined || fn == undefined || mdp == undefined ||
+            mail.length == 0 || name.length == 0 || fn.length == 0)
             res.status(400).json({"msg":"there is information missing"});
-            return;
+        else {
+            mdp = bcrypt.hashSync(mdp, 10);
+            checkAccountMail(res, mail, nb => {
+                if (nb == 84)
+                    res.status(403).json({ "msg": "Account already exists" });
+                else
+                    register(res, mail, mdp, name, fn);
+            });
         }
-        mdp = bcrypt.hashSync(mdp, 10);
-        checkAccountMail(res, mail, nb => {
-            if (nb == 84)
-                res.status(403).json({ "msg": "Account already exists" });
-            else
-                register(res, mail, mdp, name, fn);
-        });
-    })
+    });
 }

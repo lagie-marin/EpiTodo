@@ -23,7 +23,6 @@ function getTodos(res, id)
 
 function register(res, mail, mdp, name, fn)
 {
-    
     db.execute("INSERT INTO user (email, password, name, firstname) VALUES (?,?,?,?)", [mail, mdp, name, fn], (err, result, fields) => {
         if (err) {
             error(err);
