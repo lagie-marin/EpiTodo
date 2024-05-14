@@ -61,10 +61,9 @@ function getAccountMail(res, mail, mdp, bcrypt, callback)
             callback(84);
         else {
             var mdp2 = result[0].password;
-            var id = result[0].id;
 
             if(bcrypt.compareSync(mdp, mdp2)) {
-                const token = jwt.sign({email:mail, id:id}, process.env.SECRET);
+                const token = jwt.sign({email:mail, id:result[0].id}, process.env.SECRET);
                 res.json({token});
                 callback(0);
             }

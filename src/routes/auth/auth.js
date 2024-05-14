@@ -10,11 +10,9 @@ module.exports = function (app, bcrypt) {
             res.status(500).json({"msg":"internal server error"});
             return;
         }
-        getAccountMail(res, mail, mdp, bcrypt, nb => {
+        getAccountMail(res, mail, mdp, bcrypt, (nb) => {
             if (nb == 84)
                 res.status(401).json({"msg" : "Invalid Credentials"});
-            else
-                res.status(200).json({ "token": "Token of the newly logged in user" });
         });
     });
 
