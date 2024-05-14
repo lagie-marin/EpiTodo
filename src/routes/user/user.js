@@ -10,8 +10,12 @@ module.exports = function(app, bcrypt) {
         getTodos(res, req.user);
     });
 
-    app.get("/users/:info", auth, (req, res) => {
-        getInfoUser(res, req.params.info);
+    app.get("/users/:id", auth, (req, res) => {
+        getInfoUser(res, req.params.id);
+    });
+
+    app.get("/users/:email", auth, (req, res) => {
+        getInfoUser(res, req.params.email);
     });
 
     app.delete("/users/:id", auth, (req, res) => {
