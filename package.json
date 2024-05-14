@@ -19,6 +19,7 @@
   "devDependencies": {
     "chalk": "^5.3.0",
     "dayjs": "^1.11.11",
+    "email-validator": "^2.0.4",
     "fs": "^0.0.1-security"
   }
 }
